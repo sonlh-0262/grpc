@@ -1,0 +1,62 @@
+version: "3.3"
+
+services:
+  php:
+    image: dung13890/php-env
+    container_name: php
+    restart: on-failure
+    tty: true
+    networks:
+      - grpcnet
+    volumes:
+      - ./php:/var/www/app
+  go:
+    image: dung13890/go-env
+    container_name: go
+    restart: on-failure
+    networks:
+      - grpcnet
+    volumes:
+      - ./go:/go/src/github.com/dao.anh.dung/grpc/serve
+    working_dir: /go/src/github.com/dao.anh.dung/grpc/serve
+    environment:
+      - GOBIN=/go/bin
+    tty: true
+  vue:
+    image: dung13890/client-env
+    container_name: vue
+    restart: on-failure
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9000:9000"
+    tty: true
+    networks:
+      - grpcnet
+    volumes:
+      - ./vue:/var/www/app
+  react:
+    image: dung13890/client-env
+    container_name: react
+    restart: on-failure
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9001:9001"
+    tty: true
+    networks:
+      - grpcnet
+    volumes:
+      - ./react:/var/www/app
+
+networks:
+  grpcnet:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.200.0.0/24
+         gateway: 172.200.0.1
+
+volumes:
+  php_data:
+  go_data:
