@@ -1,24 +1,30 @@
-# Lumen PHP Framework
+# Lumen PHP GRPC
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+## Setup Project
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### INSTALL GRPC PLUGINS
 
-## Official Documentation
+```sh
+# inside docker
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+mkdir .plugin && cd .plugin && git clone -b v1.34.1 --depth 1 https://github.com/grpc/grpc && cd grpc && git submodule update --init && make grpc_php_plugin
+```
 
-## Contributing
+## Run Project
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Generate From protoc
 
-## Security Vulnerabilities
+```sh
+# inside docker
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+protoc -I pb/user/ pb/user/user.proto --php_out=pb/ --grpc_out=pb/ --plugin=protoc-gen-grpc=bins/opt/grpc_php_plugin
+```
 
-## License
+### Send request into server
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sh
+# Request send to go container service with port 51308
+
+php artisan grpc:user
+```
+
