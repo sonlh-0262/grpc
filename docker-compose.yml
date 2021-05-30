@@ -10,10 +10,14 @@ services:
       - grpcnet
     volumes:
       - ./php:/var/www/app
+    links:
+      - go
   go:
     image: dung13890/go-env
     container_name: go
     restart: on-failure
+    ports:
+      - "1308:1308"
     networks:
       - grpcnet
     volumes:
@@ -29,7 +33,7 @@ services:
     environment:
       - NODE_ENV=development
     ports:
-      - "9000:9000"
+      - "7000:9000"
     tty: true
     networks:
       - grpcnet
@@ -42,7 +46,7 @@ services:
     environment:
       - NODE_ENV=development
     ports:
-      - "9001:9001"
+      - "7001:9001"
     tty: true
     networks:
       - grpcnet

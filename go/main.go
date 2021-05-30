@@ -27,7 +27,7 @@ func (s *server) GetUsers(ctx context.Context, req *pb.GetRequest) (*pb.GetRespo
 
 func main() {
 	// tcp listener
-	lis, err := net.Listen("tcp", ":51308")
+	lis, err := net.Listen("tcp", ":1308")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
