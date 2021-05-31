@@ -10,20 +10,10 @@ yarn install
 yarn serve
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+### Compiles grpc proto type script
 
-### Run your end-to-end tests
-```
-yarn test:e2e
-```
+```sh
+cd src
+protoc -I pb/user/ pb/user/user.proto --js_out=import_style=commonjs,binary:pb/user --grpc-web_out=import_style=typescript,mode=grpcwebtext:pb/user
 
-### Lints and fixes files
 ```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

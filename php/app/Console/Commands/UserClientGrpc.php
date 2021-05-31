@@ -54,6 +54,6 @@ class UserClientGrpc extends Command
             exit(1);
         }
 
-        $response->getUsers()[0];
+        var_dump($response->getUsers()[0]->getName());
     }
 }

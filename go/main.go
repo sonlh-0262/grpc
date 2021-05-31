@@ -27,12 +27,14 @@ func (s *server) GetUsers(ctx context.Context, req *pb.GetRequest) (*pb.GetRespo
 
 func main() {
 	// tcp listener
-	lis, err := net.Listen("tcp", ":1308")
+	lis, err := net.Listen("tcp", "0.0.0.0:1308")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
 	srv := grpc.NewServer()
 	pb.RegisterUserServer(srv, &server{})
-	srv.Serve(lis)
+	if err := srv.Serve(lis); err != nil {
+		log.Fatalf("Error while serving : %v", err)
+	}
 }
