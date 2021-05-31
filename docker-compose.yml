@@ -16,8 +16,8 @@ services:
     image: dung13890/go-env
     container_name: go
     restart: on-failure
-    ports:
-      - "1308:1308"
+    expose:
+      - "1308"
     networks:
       - grpcnet
     volumes:
@@ -26,6 +26,19 @@ services:
     environment:
       - GOBIN=/go/bin
     tty: true
+  envoy:
+    image: envoyproxy/envoy:v1.17.0
+    container_name: envoy
+    ports:
+      - "21308:8080"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    restart: on-failure
+    tty: true
+    networks:
+      - grpcnet
+    links:
+      - go
   vue:
     image: dung13890/client-env
     container_name: vue
