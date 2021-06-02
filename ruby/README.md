@@ -1,3 +1,7 @@
+## Setup
+
+bundle install
+
 ## Generate proto:
 
 ./gen_proto.sh  user.proto
